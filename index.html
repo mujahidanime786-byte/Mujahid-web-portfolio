@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Search Console Verification (DO NOT REMOVE) -->
+    <meta name="google-site-verification" content="Mnx07ycXWGwydOpDxQENQCio3YwOx7q5OJ7TXK7gn7w" />
+
+    <title>Mujahid Web Builder | Front-End Developer</title>
+
+    <meta name="description" content="Mujahid Web Builder - Professional Website Builder & Front-End Developer based in Bihar, India.">
+
+    <link rel="canonical" href="https://mujahid-web-portfolio.vercel.app/">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" href="Mujahid.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        document.documentElement.classList.add('js-enabled');
+
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#3b82f6', // Blue 500
+                        secondary: '#8b5cf6', // Violet 500
+                        darkBg: '#09090b', // Zinc 950
+                        darkCard: '#18181b', // Zinc 900
+                        lightBg: '#fafafa', // Zinc 50
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+
+        body { overflow-x: hidden; }
+
+        /* Smooth Reveal Animations - Safe Fallback */
+        .js-enabled .reveal { 
+            opacity: 0; 
+            transform: translateY(40px); 
+        }
+        .reveal {
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .reveal-delay-1 { transition-delay: 0.15s; }
+        .reveal-delay-2 { transition-delay: 0.3s; }
+
+        /* Navigation Glass Effect */
+        .nav-glass {
+            background: rgba(250, 250, 250, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        html.dark .nav-glass {
+            background: rgba(9, 9, 11, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Modern Hover Cards */
+        .modern-card {
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        html.dark .modern-card {
+            background: rgba(24, 24, 27, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .modern-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Navigation Links Highlight */
+        .desktop-nav-link { position: relative; }
+        .desktop-nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -4px; left: 0; background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        .desktop-nav-link:hover::after, .desktop-nav-link.active::after { width: 100%; }
+        .desktop-nav-link.active { color: #3b82f6; font-weight: 600; }
+        html.dark .desktop-nav-link.active { color: #60a5fa; }
+        
+        /* Dotted Background for Dark Mode */
+        html.dark body {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Payment Modal Animation */
+        .modal-enter {
+            animation: modalFadeIn 0.3s ease-out forwards;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-lightBg text-slate-800 dark:bg-darkBg dark:text-slate-300 transition-colors duration-500 font-sans">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#home" class="font-display font-bold text-2xl tracking-tighter text-slate-900 dark:text-white flex items-center gap-2 group">
+                    <div class="bg-gradient-to-tr from-primary to-secondary text-white w-10 h-10 flex items-center justify-center rounded-xl shadow-lg shadow-primary/30 group-hover:rotate-12 transition-transform">M</div>
+                    <span>Mujahid<span class="text-primary">.</span></span>
+                </a>
+
+                <!-- Desktop Links -->
+                <div class="hidden lg:flex items-center space-x-7">
+                    <ul class="flex space-x-7 text-sm font-medium text-slate-600 dark:text-slate-400">
+                        <li><a href="#home" class="desktop-nav-link hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="#about" class="desktop-nav-link hover:text-primary transition-colors">About</a></li>
+                        <li><a href="#skills" class="desktop-nav-link hover:text-primary transition-colors">Skills</a></li>
+                        <li><a href="#portfolio" class="desktop-nav-link hover:text-primary transition-colors">Portfolio</a></li>
+                        <li><a href="#services" class="desktop-nav-link hover:text-primary transition-colors">Services</a></li>
+                        <li><a href="#pricing" class="desktop-nav-link hover:text-primary transition-colors">Pricing</a></li>
+                    </ul>
+                    
+                    <a href="#contact" class="hidden xl:block px-6 py-2.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-bold hover:scale-105 transition-transform shadow-lg">
+                        Hire Me
+                    </a>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="theme-toggle" class="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors focus:outline-none text-slate-600 dark:text-slate-300">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:block text-yellow-400"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center gap-3">
+                    <button id="theme-toggle-mobile" class="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 focus:outline-none text-slate-600 dark:text-slate-300">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:block text-yellow-400"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-2xl text-slate-900 dark:text-white focus:outline-none">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 w-full nav-glass border-b shadow-2xl">
+            <ul class="px-6 pt-4 pb-8 space-y-4 text-center font-medium text-lg text-slate-800 dark:text-slate-200">
+                <li><a href="#home" class="block py-2 hover:text-primary transition-colors mobile-link">Home</a></li>
+                <li><a href="#about" class="block py-2 hover:text-primary transition-colors mobile-link">About</a></li>
+                <li><a href="#skills" class="block py-2 hover:text-primary transition-colors mobile-link">Skills</a></li>
+                <li><a href="#portfolio" class="block py-2 hover:text-primary transition-colors mobile-link">Portfolio</a></li>
+                <li><a href="#services" class="block py-2 hover:text-primary transition-colors mobile-link">Services</a></li>
+                <li><a href="#pricing" class="block py-2 hover:text-primary transition-colors mobile-link">Pricing</a></li>
+                <li><a href="#contact" class="block py-3 mt-4 rounded-full bg-primary text-white font-bold mobile-link shadow-lg shadow-primary/30">Contact Me</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 1. Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-[500px] opacity-40 dark:opacity-50 pointer-events-none">
+            <div class="absolute top-0 -left-10 w-80 h-80 bg-primary rounded-full mix-blend-multiply filter blur-[120px] animate-blob"></div>
+            <div class="absolute top-0 -right-10 w-80 h-80 bg-secondary rounded-full mix-blend-multiply filter blur-[120px] animate-blob" style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-[120px] animate-blob" style="animation-delay: 4s;"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 font-medium text-sm mb-8 shadow-sm reveal backdrop-blur-sm">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
+                Available for new projects
+            </div>
+            
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-slate-900 dark:text-white mb-6 reveal reveal-delay-1 leading-[1.1]">
+                Hi, I'm <span class="text-gradient">Mujahid</span><br>
+                Web Developer.
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 reveal reveal-delay-2 font-light leading-relaxed">
+                I design and build professional, responsive, and high-performance websites that elevate your digital presence and drive results.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal reveal-delay-2">
+                <a href="#pricing" class="px-8 py-4 w-full sm:w-auto rounded-full bg-primary text-white font-bold hover:bg-blue-600 hover:scale-105 transition-all shadow-xl shadow-primary/30">
+                    Plan & Charges
+                </a>
+                <a href="#contact" class="px-8 py-4 w-full sm:w-auto rounded-full bg-white dark:bg-darkCard border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold hover:border-primary hover:text-primary dark:hover:text-primary transition-all">
+                    Contact Me <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. About Me Section -->
+    <section id="about" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal relative order-2 lg:order-1 mt-10 lg:mt-0">
+                    <h2 class="text-primary font-bold tracking-widest uppercase text-xs mb-3">About Me</h2>
+                    <h3 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-6">Crafting Digital Solutions That Inspire.</h3>
+                    <p class="text-slate-600 dark:text-slate-400 mb-6 text-lg font-light leading-relaxed">
+                        I am Mujahid, a dedicated Front-End Developer with a passion for building pixel-perfect, interactive, and user-friendly web applications. I bridge the gap between elegant UI design and robust technical functionality.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 mt-8">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary"><i class="fa-solid fa-building"></i></div>
+                            <span class="font-medium text-slate-800 dark:text-slate-200">Business & Agency Sites</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary"><i class="fa-solid fa-school"></i></div>
+                            <span class="font-medium text-slate-800 dark:text-slate-200">School & College Sites</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary"><i class="fa-solid fa-dumbbell"></i></div>
+                            <span class="font-medium text-slate-800 dark:text-slate-200">Gym & Fitness Sites</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary"><i class="fa-solid fa-laptop-code"></i></div>
+                            <span class="font-medium text-slate-800 dark:text-slate-200">Portfolio & Landing Pages</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal reveal-delay-1 relative order-1 lg:order-2">
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl ring-1 ring-slate-200 dark:ring-white/10">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Workspace" class="w-full h-auto object-cover aspect-[4/3] hover:scale-105 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 md:-bottom-8 md:-left-8 modern-card p-5 rounded-2xl flex items-center gap-4 border border-slate-100 dark:border-white/10 backdrop-blur-lg">
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                            3+
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-900 dark:text-white leading-tight">Years of<br>Experience</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Skills Section -->
+    <section id="skills" class="py-24 bg-slate-50 dark:bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-20 reveal">
+                <h2 class="text-primary font-bold tracking-widest uppercase text-xs mb-3">Capabilities</h2>
+                <h3 class="font-display text-4xl md:text-5xl tracking-tight font-bold text-slate-900 dark:text-white">Technical Expertise</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+                <div class="space-y-8 reveal">
+                    <div>
+                        <div class="flex justify-between mb-3 text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                            <span>HTML5 & CSS3</span>
+                            <span class="text-primary">95%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-primary h-full rounded-full progress-bar w-0 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(59,130,246,0.6)]" data-width="95%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-3 text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                            <span>Tailwind CSS</span>
+                            <span class="text-primary">95%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-primary h-full rounded-full progress-bar w-0 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(59,130,246,0.6)]" data-width="95%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-3 text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                            <span>JavaScript (Vanilla)</span>
+                            <span class="text-primary">85%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-primary h-full rounded-full progress-bar w-0 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(59,130,246,0.6)]" data-width="85%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-8 reveal reveal-delay-1">
+                    <div>
+                        <div class="flex justify-between mb-3 text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                            <span>Responsive Design</span>
+                            <span class="text-secondary">98%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-secondary h-full rounded-full progress-bar w-0 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(139,92,246,0.6)]" data-width="98%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-3 text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                            <span>UI/UX Design</span>
+                            <span class="text-secondary">88%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-secondary h-full rounded-full progress-bar w-0 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(139,92,246,0.6)]" data-width="88%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-3 text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">
+                            <span>Web Optimization</span>
+                            <span class="text-secondary">90%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            <div class="bg-secondary h-full rounded-full progress-bar w-0 transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(139,92,246,0.6)]" data-width="90%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Portfolio Section -->
+    <section id="portfolio" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <h2 class="text-primary font-bold tracking-widest uppercase text-xs mb-3">Portfolio</h2>
+                <h3 class="font-display text-4xl md:text-5xl tracking-tight font-bold text-slate-900 dark:text-white">Recent Projects</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="modern-card rounded-3xl overflow-hidden group reveal">
+                    <div class="relative h-60 overflow-hidden bg-slate-200 dark:bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="School Project" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-8">
+                        <h4 class="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">School Platform</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">A clean and fully responsive educational platform designed for students and administration management.</p>
+                    </div>
+                </div>
+
+                <div class="modern-card rounded-3xl overflow-hidden group reveal reveal-delay-1">
+                    <div class="relative h-60 overflow-hidden bg-slate-200 dark:bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="Gym Project" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-8">
+                        <h4 class="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">Fitness Hub</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">A high-performance modern website built for a premium gym, featuring class schedules and memberships.</p>
+                    </div>
+                </div>
+
+                <div class="modern-card rounded-3xl overflow-hidden group reveal reveal-delay-2">
+                    <div class="relative h-60 overflow-hidden bg-slate-200 dark:bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="E-Commerce Project" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out">
+                    </div>
+                    <div class="p-8">
+                        <h4 class="font-display font-bold text-xl text-slate-900 dark:text-white mb-2">Supermarket E-Store</h4>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">An elegant online store interface with optimized product filtering and intuitive shopping cart functionality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Services Section -->
+    <section id="services" class="py-24 bg-slate-50 dark:bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-20 reveal">
+                <h2 class="text-primary font-bold tracking-widest uppercase text-xs mb-3">Offerings</h2>
+                <h3 class="font-display text-4xl md:text-5xl tracking-tight font-bold text-slate-900 dark:text-white">Specialized Services</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="modern-card p-8 rounded-3xl reveal"><i class="fa-solid fa-graduation-cap text-3xl text-primary mb-6"></i><h4 class="font-display font-bold text-xl text-slate-900 dark:text-white mb-3">School Websites</h4></div>
+                <div class="modern-card p-8 rounded-3xl reveal reveal-delay-1"><i class="fa-solid fa-dumbbell text-3xl text-secondary mb-6"></i><h4 class="font-display font-bold text-xl text-slate-900 dark:text-white mb-3">Gym Websites</h4></div>
+                <div class="modern-card p-8 rounded-3xl reveal reveal-delay-2"><i class="fa-solid fa-briefcase text-3xl text-primary mb-6"></i><h4 class="font-display font-bold text-xl text-slate-900 dark:text-white mb-3">Business Sites</h4></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. PRICING SECTION & PAYMENT GATEWAY -->
+    <section id="pricing" class="py-24 border-y border-slate-100 dark:border-white/5 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <h2 class="text-primary font-bold tracking-widest uppercase text-xs mb-3">Pricing Plans</h2>
+                <h3 class="font-display text-4xl md:text-5xl tracking-tight font-bold text-slate-900 dark:text-white">Transparent & Affordable</h3>
+            </div>
+
+            <!-- Website Build Charge Card -->
+            <div class="max-w-3xl mx-auto bg-gradient-to-r from-primary to-secondary p-1 rounded-3xl mb-24 reveal shadow-2xl shadow-primary/20 hover:scale-[1.02] transition-transform duration-300">
+                <div class="bg-white dark:bg-darkCard p-8 md:p-12 rounded-[22px] text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
+                    
+                    <h4 class="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-2">Professional Website Development</h4>
+                    <p class="text-4xl md:text-6xl font-display font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
+                        ₹5,000 - ₹10,000
+                    </p>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm md:text-base font-medium max-w-lg mx-auto">
+                        One-time design and development fee based on the complexity and requirements of your project. Select your preferred deposit amount below.
+                    </p>
+
+                    <!-- Custom Amount Input -->
+                    <div class="mt-8 max-w-sm mx-auto">
+                        <label for="custom-amount" class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Set Your Payment Amount</label>
+                        <div class="relative flex items-center justify-center group">
+                            <span class="absolute left-4 text-slate-500 font-bold text-xl group-focus-within:text-primary transition-colors">₹</span>
+                            <input type="number" id="custom-amount" min="5000" max="10000" step="500" value="5000" 
+                                class="w-full pl-10 pr-4 py-3 text-xl font-bold bg-slate-50 dark:bg-black/30 border-2 border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white focus:outline-none focus:border-primary dark:focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all text-center shadow-inner">
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2 font-medium">Amount must be between ₹5,000 and ₹10,000</p>
+                    </div>
+                    
+                    <button onclick="payCustomAmount()" id="custom-pay-btn" class="mt-5 px-10 py-4 w-full max-w-sm mx-auto block bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-black/20 dark:shadow-white/10">
+                        Pay ₹5,000 Advance <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hosting & Domain Intro -->
+            <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+                <h4 class="font-display text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-4">Web Hosting & Domain Plans</h4>
+                <p class="text-slate-600 dark:text-slate-400 text-sm">Choose a reliable hosting plan for your new website. Powered by premium servers to ensure maximum speed and uptime.</p>
+            </div>
+
+            <!-- Pricing Grid -->
+            <div class="flex justify-center items-start">
+                
+                <!-- Single Web Hosting Plan -->
+                <div class="modern-card relative p-8 rounded-3xl reveal flex flex-col w-full max-w-md border-2 border-primary shadow-[0_0_30px_rgba(59,130,246,0.15)] bg-white dark:bg-[#131b2f]">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-primary to-secondary text-white px-5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest shadow-md whitespace-nowrap">
+                        Special Offer
+                    </div>
+                    
+                    <div class="mb-4 mt-2 text-center">
+                        <span class="inline-block bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-4">66% OFF</span>
+                        <h4 class="font-display font-bold text-3xl text-slate-900 dark:text-white mb-2">Web Hosting Plan</h4>
+                        <p class="text-slate-500 text-sm">Everything you need to keep your website fast and live.</p>
+                    </div>
+                    
+                    <div class="mb-2 text-center">
+                        <span class="text-slate-400 dark:text-slate-500 line-through text-xl font-medium mr-2">₹1,500</span>
+                        <div class="flex items-baseline justify-center gap-1">
+                            <span class="text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">₹700</span>
+                            <span class="text-slate-500 text-lg font-medium">/mo</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-8 font-medium text-center">Billed monthly. Auto-pay enabled.</p>
+                    
+                    <button onclick="openPaymentModal('Web Hosting Subscription', 700, true)" class="block w-full py-4 mb-6 bg-primary text-white text-center rounded-xl font-bold hover:bg-blue-600 transition-colors shadow-lg shadow-primary/30 text-base">
+                        Subscribe Now
+                    </button>
+                    
+                    <div class="space-y-4 text-sm text-slate-600 dark:text-slate-400 flex-grow mt-2">
+                        <ul class="space-y-4">
+                            <li class="flex gap-3 items-center"><i class="fa-solid fa-check text-green-500 text-lg"></i> <span><strong class="text-slate-900 dark:text-white">Website Hosting</strong> optimized for speed</span></li>
+                            <li class="flex gap-3 items-center"><i class="fa-solid fa-check text-green-500 text-lg"></i> <span><strong class="text-slate-900 dark:text-white">Free Domain</strong> included</span></li>
+                            <li class="flex gap-3 items-center"><i class="fa-solid fa-check text-green-500 text-lg"></i> <span><strong class="text-slate-900 dark:text-white">High-Level SSD</strong> storage</span></li>
+                            <li class="flex gap-3 items-center"><i class="fa-solid fa-check text-green-500 text-lg"></i> <span><strong class="text-slate-900 dark:text-white">Reliable Server</strong> (99.9% Uptime)</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Contact Section -->
+    <section id="contact" class="py-24 relative z-10 bg-slate-50 dark:bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <h2 class="text-primary font-bold tracking-widest uppercase text-xs mb-3">Get In Touch</h2>
+                <h3 class="font-display text-4xl md:text-5xl tracking-tight font-bold text-slate-900 dark:text-white">Contact Me</h3>
+                <p class="text-slate-600 dark:text-slate-400 mt-4 text-lg">Have a project in mind or just want to say hi? Feel free to reach out!</p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6 md:gap-8 reveal">
+                
+                <!-- WhatsApp Card -->
+                <a href="https://wa.me/918409864452" target="_blank" class="modern-card p-6 md:p-8 rounded-3xl flex items-center gap-6 w-full max-w-md hover:border-green-500 hover:shadow-[0_10px_30px_rgba(34,197,94,0.15)] transition-all group">
+                    <div class="w-16 h-16 bg-green-50 dark:bg-green-900/30 text-green-500 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform shadow-sm">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs md:text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">WhatsApp</h4>
+                        <p class="text-lg md:text-xl font-bold text-slate-900 dark:text-white">+91 84098 64452</p>
+                    </div>
+                </a>
+
+                <!-- Email Card -->
+                <a href="mailto:mujahidanime786@gmail.com" class="modern-card p-6 md:p-8 rounded-3xl flex items-center gap-6 w-full max-w-md hover:border-primary hover:shadow-[0_10px_30px_rgba(59,130,246,0.15)] transition-all group">
+                    <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-primary rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform shadow-sm">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs md:text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Email</h4>
+                        <p class="text-sm md:text-base font-bold text-slate-900 dark:text-white truncate">mujahidanime786@gmail.com</p>
+                    </div>
+                </a>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Footer & Floating Button -->
+    <footer class="bg-white dark:bg-darkBg pt-20 pb-10 border-t border-slate-100 dark:border-white/5 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
+            <a href="#home" class="font-display font-bold text-3xl tracking-tighter text-slate-900 dark:text-white flex items-center gap-2 mb-8">
+                <div class="bg-gradient-to-tr from-primary to-secondary text-white w-10 h-10 flex items-center justify-center rounded-xl">M</div>
+                <span>Mujahid<span class="text-primary">.</span></span>
+            </a>
+            <div class="border-t border-slate-100 dark:border-white/5 w-full pt-8 flex flex-col md:flex-row justify-between items-center text-sm font-medium text-slate-500 dark:text-slate-400">
+                <p>&copy; 2026 Mujahid Web Builder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-primary text-white rounded-full shadow-lg shadow-primary/30 opacity-0 invisible transition-all duration-300 hover:bg-blue-600 hover:-translate-y-2 focus:outline-none z-40 flex items-center justify-center text-lg">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+
+    <!-- ========================================== -->
+    <!-- SECURE PAYMENT MODAL                       -->
+    <!-- ========================================== -->
+    <div id="payment-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        
+        <div class="modern-card bg-white dark:bg-darkCard rounded-3xl p-6 md:p-8 w-full max-w-md relative shadow-2xl modal-enter border border-slate-200 dark:border-white/10">
+            <!-- Close Button -->
+            <button onclick="closePaymentModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-red-500 rounded-full transition-colors">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-primary mx-auto rounded-full flex items-center justify-center text-2xl mb-4">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="font-display font-bold text-2xl text-slate-900 dark:text-white mb-1">Complete Payment</h3>
+                <p id="pay-plan-name" class="text-sm text-slate-500 dark:text-slate-400 font-medium">Web Hosting Subscription</p>
+                <div class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mt-3" id="pay-amount">
+                    ₹700 /mo
+                </div>
+            </div>
+
+            <!-- Hidden Checkbox to maintain Auto-pay logic behind the scenes -->
+            <input type="checkbox" id="autoPayToggle" class="hidden">
+
+            <!-- QR Code Container -->
+            <div class="bg-white p-3 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 mx-auto w-48 h-48 mb-4 flex items-center justify-center relative group">
+                <img src="qr-code.jpg" alt="UPI QR Code" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg'" class="w-full h-full object-contain rounded-xl">
+                <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex flex-col items-center justify-center text-white text-xs font-bold gap-2">
+                    <i class="fa-solid fa-expand text-xl"></i>
+                    Scan to Pay
+                </div>
+            </div>
+
+            <p class="text-center text-xs text-slate-500 dark:text-slate-400 mb-6 font-medium">Scan using Google Pay, PhonePe, or Paytm</p>
+
+            <div class="flex flex-col gap-3">
+                <!-- Mobile Pay Button (Intent) -->
+                <a href="#" id="upi-app-link" class="w-full py-3.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-center rounded-xl font-bold hover:scale-[1.02] transition-transform shadow-md flex justify-center items-center gap-2">
+                    <i class="fa-brands fa-google-pay text-xl"></i> Pay via UPI App
+                </a>
+            </div>
+            
+            <div class="text-center mt-4">
+                <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold"><i class="fa-solid fa-lock mr-1"></i> Secured by UPI</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                // Safe setup for Dark Mode toggles
+                const html = document.documentElement;
+                const themeBtns = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
+                
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    html.classList.add('dark');
+                } else {
+                    html.classList.remove('dark');
+                }
+
+                themeBtns.forEach(btn => {
+                    if(btn) {
+                        btn.addEventListener('click', () => {
+                            html.classList.toggle('dark');
+                            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+                        });
+                    }
+                });
+
+                // Safe setup for Mobile Menu
+                const mobileBtn = document.getElementById('mobile-menu-btn');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileLinks = document.querySelectorAll('.mobile-link');
+
+                if(mobileBtn && mobileMenu) {
+                    mobileBtn.addEventListener('click', () => {
+                        mobileMenu.classList.toggle('hidden');
+                        const icon = mobileBtn.querySelector('i');
+                        if(icon) {
+                            icon.className = mobileMenu.classList.contains('hidden') ? 'fa-solid fa-bars-staggered' : 'fa-solid fa-xmark';
+                        }
+                    });
+
+                    mobileLinks.forEach(link => {
+                        link.addEventListener('click', () => {
+                            mobileMenu.classList.add('hidden');
+                            const icon = mobileBtn.querySelector('i');
+                            if(icon) icon.className = 'fa-solid fa-bars-staggered';
+                        });
+                    });
+                }
+
+                // Scroll observer for reveal animations (Guarded)
+                if ('IntersectionObserver' in window) {
+                    const revealElements = document.querySelectorAll('.reveal');
+                    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+                    const observer = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('active');
+                                const bars = entry.target.querySelectorAll('.progress-bar');
+                                bars.forEach(bar => { 
+                                    if(bar.hasAttribute('data-width')) {
+                                        bar.style.width = bar.getAttribute('data-width'); 
+                                    }
+                                });
+                                obs.unobserve(entry.target);
+                            }
+                        });
+                    }, observerOptions);
+                    revealElements.forEach(el => observer.observe(el));
+                } else {
+                    // Fallback for very old browsers
+                    document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+                }
+
+                // Scroll event listener (Navbar, Back to top, Active links)
+                const navbar = document.getElementById('navbar');
+                const backToTop = document.getElementById('back-to-top');
+                const sections = document.querySelectorAll('section');
+                const navLinksDesktop = document.querySelectorAll('.desktop-nav-link');
+
+                window.addEventListener('scroll', () => {
+                    const scrollPos = window.scrollY || document.documentElement.scrollTop;
+                    
+                    // Navbar glass effect
+                    if (navbar) {
+                        if (scrollPos > 50) {
+                            navbar.classList.add('nav-glass', 'py-3');
+                            navbar.classList.remove('py-5');
+                        } else {
+                            navbar.classList.remove('nav-glass', 'py-3');
+                            navbar.classList.add('py-5');
+                        }
+                    }
+
+                    // Back to top button visibility
+                    if (backToTop) {
+                        if (scrollPos > 500) {
+                            backToTop.classList.remove('opacity-0', 'invisible');
+                            backToTop.classList.add('opacity-100', 'visible');
+                        } else {
+                            backToTop.classList.add('opacity-0', 'invisible');
+                            backToTop.classList.remove('opacity-100', 'visible');
+                        }
+                    }
+
+                    // Desktop Link highlighting
+                    let current = '';
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        if (scrollPos >= (sectionTop - 250)) {
+                            current = section.getAttribute('id');
+                        }
+                    });
+
+                    if(current) {
+                        navLinksDesktop.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${current}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+
+                // Back to top functionality
+                if (backToTop) {
+                    backToTop.addEventListener('click', () => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                }
+
+                // Custom Payment Input Validation & Button Update
+                const customAmountInput = document.getElementById('custom-amount');
+                const customPayBtn = document.getElementById('custom-pay-btn');
+
+                if (customAmountInput && customPayBtn) {
+                    customAmountInput.addEventListener('input', (e) => {
+                        let val = parseInt(e.target.value);
+                        if (!isNaN(val)) {
+                            customPayBtn.innerHTML = `Pay ₹${val.toLocaleString('en-IN')} Advance <i class="fa-solid fa-arrow-right ml-2"></i>`;
+                        }
+                    });
+
+                    customAmountInput.addEventListener('blur', (e) => {
+                        let val = parseInt(e.target.value);
+                        if(isNaN(val) || val < 5000) {
+                            customAmountInput.value = 5000;
+                            customPayBtn.innerHTML = `Pay ₹5,000 Advance <i class="fa-solid fa-arrow-right ml-2"></i>`;
+                        } else if (val > 10000) {
+                            customAmountInput.value = 10000;
+                            customPayBtn.innerHTML = `Pay ₹10,000 Advance <i class="fa-solid fa-arrow-right ml-2"></i>`;
+                        }
+                    });
+                }
+            } catch (err) {
+                console.error("Non-fatal JS error caught:", err);
+            }
+        });
+
+        // ==========================================
+        // CUSTOM AMOUNT PAYMENT
+        // ==========================================
+        function payCustomAmount() {
+            const input = document.getElementById('custom-amount');
+            let amount = parseInt(input.value);
+            
+            // Validation fallback just in case
+            if(isNaN(amount) || amount < 5000) {
+                amount = 5000;
+                input.value = 5000;
+            } else if (amount > 10000) {
+                amount = 10000;
+                input.value = 10000;
+            }
+            
+            openPaymentModal('Website Development Advance', amount, false);
+        }
+
+        // ==========================================
+        // PAYMENT MODAL & LOGIC
+        // ==========================================
+        function openPaymentModal(planName, amount, isSubscription) {
+            const planEl = document.getElementById('pay-plan-name');
+            const amountEl = document.getElementById('pay-amount');
+            if(planEl) planEl.innerText = planName;
+            if(amountEl) amountEl.innerText = '₹' + amount.toLocaleString('en-IN') + (isSubscription ? ' /mo' : '');
+            
+            const autoPayState = document.getElementById('autoPayToggle');
+            if (autoPayState) autoPayState.checked = isSubscription; 
+
+            const upiId = '8409864452@upi'; 
+            const transactionRef = 'MUJ' + Math.floor(Math.random() * 1000000);
+            const upiUrl = `upi://pay?pa=${upiId}&pn=Mujahid%20Web%20Builder&tr=${transactionRef}&am=${amount}&cu=INR&mode=02`;
+            
+            const upiLink = document.getElementById('upi-app-link');
+            if(upiLink) upiLink.href = upiUrl;
+
+            const modal = document.getElementById('payment-modal');
+            if(modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closePaymentModal() {
+            const modal = document.getElementById('payment-modal');
+            if(modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+    </script>
+</body>
+</html>
